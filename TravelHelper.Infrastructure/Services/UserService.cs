@@ -1,26 +1,38 @@
 using System;
-using System.Reflection.Emit;
+using System.Threading.Tasks;
+using AutoMapper;
 using TravelHelper.Core.Domain;
 using TravelHelper.Core.Repositories;
+using TravelHelper.Infrastructure.DTO;
 
 namespace TravelHelper.Infrastructure.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+        private readonly IMapper _mapper;
+        public UserService(IUserRepository userRepository,IMapper mapper)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
         }
-        public void Register(string email,string username ,string password)
+
+        public async Task<UserDto> GetAsync(string email)
         {
-            var user = _userRepository.Get(email);
+            var user =  await _userRepository.GetAsync(email);
+            return _mapper.Map<User,UserDto>(user);
+        }
+
+        public async Task RegisterAsync(string email,string username ,string password)
+        {
+            var user = await _userRepository.GetAsync(email);
             if(user!=null)
             {
                 throw new Exception($"User with email: '{email}' already exists.");
             }
             var salt= Guid.NewGuid().ToString("N");
             user = new User(email,username,password,salt);
+            await _userRepository.AddAsync(user);
 
         }
     }

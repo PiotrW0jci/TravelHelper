@@ -1,17 +1,18 @@
 using System.Collections.Generic;
 using System;
 using TravelHelper.Core.Domain;
+using System.Threading.Tasks;
 
 namespace TravelHelper.Core.Repositories
 {
     public interface IUserRepository
     {
          
-        User Get(Guid id);
-        User Get (string email);
-        IEnumerable<User> GetAll();
-        void Add(User user);
-        void Remove(Guid id);
-        void Update(User user);
+        Task <User> GetAsync(Guid id);
+        Task <User> GetAsync (string email);
+        Task <IEnumerable<User>> GetAllAsync();
+        Task AddAsync(User user);
+        Task RemoveAsync(Guid id);
+        Task UpdateAsync(User user);
     }
 }

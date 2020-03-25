@@ -15,6 +15,14 @@ namespace TravelHelper.Core.Domain
         protected Trip()
         {
         }
+        public Trip (Guid id, Guid userid,string tripname,string destination)
+        {
+            Id=id;
+            UserId= userid;
+            TripName=tripname;
+            Destination=destination;
+            CreatedAt = DateTime.UtcNow;
+        }
     }
 
 
