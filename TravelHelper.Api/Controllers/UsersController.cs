@@ -17,10 +17,13 @@ namespace TravelHelper.Api.Controllers
     public class UsersController : ApiControllerBase
     {
         private readonly IUserService _userService;
+        //private readonly IJwtHandler _jwtHandler;
         public UsersController(IUserService userService, 
         ICommandDispatcher commandDispatcher) : base(commandDispatcher)
         {
-        _userService = userService;  
+        
+        _userService = userService;
+        //_jwtHandler = jwtHandler;  
         }
         
         [HttpGet("{email}")]
@@ -33,7 +36,22 @@ namespace TravelHelper.Api.Controllers
                 await CommandDispatcher.DispatchAsync(command);
                 return Created($"iser/{command.Email}",new object());
             }
+       /*     
+         [HttpGet]
+         [Route("token")]
+         public async Task<IActionResult> Get()
+            {
+                var token = _jwtHandler.CreateToken("user1@email.com");
+                return Json(token);
+            }
 
+         [HttpGet]
+         [Route("auth")]
+         public async Task<IActionResult> GetAuth()
+            {
+                return Json("Auth");
+            }
+*/
     }
 
 }

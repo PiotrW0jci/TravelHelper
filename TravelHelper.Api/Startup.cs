@@ -1,3 +1,5 @@
+using System.Text;
+using System.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,10 @@ using TravelHelper.Infrastructure.Mappers;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using TravelHelper.Infrastructure.IoC.Modules;
+using TravelHelper.Infrastructure.IoC;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using TravelHelper.Infrastructure.Settings;
 
 namespace TravelHelper.Api
 {
@@ -34,40 +40,55 @@ namespace TravelHelper.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IUserRepository, InMemoryUserRepository>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddSingleton(AutoMapperConfig.Initialize());
+            
             services.AddControllers();
-    
-        }
+            services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;})
+                    .AddJwtBearer(cfg => {
+                        cfg.TokenValidationParameters = new TokenValidationParameters()
+                        {   
+                            ValidIssuer = " http://localhost:5001",
+                            //ValidateIssuer = jwtSettings.Issuer,
+                            ValidateAudience = false,
+                            ValidateLifetime = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secret_key"))
 
-        public void ConfigureContainer(ContainerBuilder builder){
+                };
+            
+                });
+        }
+        
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
           
-           // builder.Populate(services);
-            builder.RegisterModule<CommandModule>();
+            builder.RegisterModule(new ContainerModule(Configuration));
      
             
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime appLifetime)
+        public void  Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime appLifetime)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            
             app.UseAuthorization();
-
+            app.UseAuthentication();
+    
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
             appLifetime.ApplicationStopped.Register(() => ApplicationContainer.Dispose());
+
         }
     }
 }
