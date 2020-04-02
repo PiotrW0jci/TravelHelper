@@ -12,11 +12,10 @@ namespace TravelHelper.Infrastructure.Services
     public class JwtHandler : IJwtHandler
     {
         
-        private readonly JwtSettings _settings;
-        public JwtHandler(JwtSettings settings)
-        {
-            _settings = settings;
-        }
+       // private readonly JwtSettings _settings;
+      //  {
+        //    _settings = settings;
+     //   }
 
         public JwtDto CreateToken(string email)
         {
@@ -28,14 +27,14 @@ namespace TravelHelper.Infrastructure.Services
                 new Claim(JwtRegisteredClaimNames.Iat, now.ToTimestamp().ToString(), ClaimValueTypes.Integer64)
             };
 
-            var expires = now.AddMinutes(_settings.ExpiryMinutes);
-            var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.Key)), 
+           // var expires = now.AddMinutes(double min =5.0);
+            var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("xecretKeywqejane")), 
                 SecurityAlgorithms.HmacSha256);
             var jwt = new JwtSecurityToken(
-                //issuer: _settings.Issuer,
+                issuer: "http://localhost:5001",
                 claims: claims,
                 notBefore: now,
-                expires: expires,
+                //expires: expires,
                 signingCredentials: signingCredentials
             );
             var token = new JwtSecurityTokenHandler().WriteToken(jwt);
@@ -43,7 +42,7 @@ namespace TravelHelper.Infrastructure.Services
             return new JwtDto
             {
                 Token = token,
-                Expires = expires.ToTimestamp()
+               // Expires = expires.ToTimestamp()
             };
         }
     }

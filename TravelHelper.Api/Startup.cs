@@ -23,6 +23,7 @@ using TravelHelper.Infrastructure.IoC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using TravelHelper.Infrastructure.Settings;
+using Microsoft.AspNetCore.Http;
 
 namespace TravelHelper.Api
 {
@@ -40,26 +41,36 @@ namespace TravelHelper.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddMemoryCache();
             services.AddControllers();
-            services.AddAuthentication(options => {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;})
+            services.AddScoped<IUserService, UserService>();
+        // Build an intermediate service provider
+            var sp = services.BuildServiceProvider();
+
+        // Resolve the services from the service provider
+            var jwtSettings = sp.GetService<JwtSettings>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(cfg => {
                         cfg.TokenValidationParameters = new TokenValidationParameters()
                         {   
-                            ValidIssuer = " http://localhost:5001",
-                            //ValidateIssuer = jwtSettings.Issuer,
+                            ValidIssuer = "http://localhost:5001",
                             ValidateAudience = false,
-                            ValidateLifetime = true,
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secret_key"))
+                           // ValidateLifetime = true,
+                           //todo move and change the secret key
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("xecretKeywqejane"))
 
-                };
-            
-                });
+                    };
+
+
+                }
+ 
+                
+                );
+                // configure DI for application services
+           
         }
         
-
+    
         public void ConfigureContainer(ContainerBuilder builder)
         {
           
@@ -74,19 +85,16 @@ namespace TravelHelper.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
-            
+            }           
             app.UseHttpsRedirection();
-
-            app.UseRouting();
-            
+            app.UseRouting();         
             app.UseAuthorization();
-            app.UseAuthentication();
-    
+            app.UseAuthentication();  
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+            
             appLifetime.ApplicationStopped.Register(() => ApplicationContainer.Dispose());
 
         }

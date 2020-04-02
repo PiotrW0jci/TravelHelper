@@ -32,8 +32,8 @@ namespace TravelHelper.Infrastructure.Services
             {
                 throw new Exception($"User with email: '{email}' does not exists.");
             }
-            var salt= _encrypter.GetSalt(password);
-            var hash = _encrypter.GetHash(password,salt);
+            
+            var hash = _encrypter.GetHash(password,user.Salt);
             if(user.Password == hash)
             {
                 return;
@@ -45,7 +45,7 @@ namespace TravelHelper.Infrastructure.Services
         public async Task RegisterAsync(string email,string username ,string password)
         {
             var user = await _userRepository.GetAsync(email);
-            if(user!=null)
+            if(user==null)
             {
                 throw new Exception($"User with email: '{email}' already exists.");
             }

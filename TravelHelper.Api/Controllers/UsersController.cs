@@ -9,21 +9,24 @@ using TravelHelper.Infrastructure.DTO;
 using TravelHelper.Infrastructure.Services;
 using TravelHelper.Infrastructure.Commands.Users;
 using TravelHelper.Infrastructure.Commands;
+using Microsoft.Extensions.Caching.Memory;
+using TravelHelper.Infrastructure.Extensions;
 
 namespace TravelHelper.Api.Controllers
 {
-    
+     
 
     public class UsersController : ApiControllerBase
     {
         private readonly IUserService _userService;
-        //private readonly IJwtHandler _jwtHandler;
+        private readonly IJwtHandler _jwtHandler;
+        private readonly IMemoryCache _cache;
         public UsersController(IUserService userService, 
-        ICommandDispatcher commandDispatcher) : base(commandDispatcher)
+        ICommandDispatcher commandDispatcher,IJwtHandler jwtHandler,IMemoryCache cache) : base(commandDispatcher)
         {
-        
+        _cache =cache;
         _userService = userService;
-        //_jwtHandler = jwtHandler;  
+        _jwtHandler = jwtHandler;  
         }
         
         [HttpGet("{email}")]
@@ -34,9 +37,17 @@ namespace TravelHelper.Api.Controllers
         public async Task<IActionResult> Post([FromBody]CreateUser command)
             {
                 await CommandDispatcher.DispatchAsync(command);
-                return Created($"iser/{command.Email}",new object());
+                return Created($"user/{command.Email}",new object());
             }
-       /*     
+        
+        
+      //  [HttpPost("login")]
+      //  public async Task<IActionResult> Post([FromBody]LoginAsync command)
+      //  {//            await CommandDispatcher.DispatchAsync(command);
+    //        return 
+     //   }
+    //       
+          
          [HttpGet]
          [Route("token")]
          public async Task<IActionResult> Get()
@@ -44,14 +55,14 @@ namespace TravelHelper.Api.Controllers
                 var token = _jwtHandler.CreateToken("user1@email.com");
                 return Json(token);
             }
-
          [HttpGet]
          [Route("auth")]
          public async Task<IActionResult> GetAuth()
             {
                 return Json("Auth");
             }
-*/
+        
+        
     }
 
 }
