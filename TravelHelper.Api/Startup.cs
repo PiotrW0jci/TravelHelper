@@ -43,6 +43,7 @@ namespace TravelHelper.Api
         {
             services.AddMemoryCache();
             services.AddControllers();
+            services.AddCors();
             services.AddScoped<IUserService, UserService>();
         // Build an intermediate service provider
             var sp = services.BuildServiceProvider();
@@ -90,6 +91,7 @@ namespace TravelHelper.Api
             app.UseRouting();         
             app.UseAuthorization();
             app.UseAuthentication();  
+            app.UseCors(x=>x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
