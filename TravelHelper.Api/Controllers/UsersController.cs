@@ -30,8 +30,16 @@ namespace TravelHelper.Api.Controllers
         }
         
         [HttpGet("{email}")]
-        public async Task<UserDto> GetUser(string email)
-             =>await _userService.GetAsync(email);
+        public async Task<IActionResult> Get(string email)
+        {
+             var user=await _userService.GetAsync(email);
+             if(user==null)
+             {
+                 return NotFound();
+             }
+             return Json(user);
+
+        }
 
         [HttpPost("")]
         public async Task<IActionResult> Post([FromBody]CreateUser command)
@@ -50,7 +58,7 @@ namespace TravelHelper.Api.Controllers
           
          [HttpGet]
          [Route("token")]
-         public async Task<IActionResult> Get()
+         public async Task<IActionResult> GetToken()
             {
                 var token = _jwtHandler.CreateToken("user1@email.com");
                 return Json(token);
