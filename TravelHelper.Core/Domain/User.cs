@@ -1,6 +1,7 @@
 using System.IO;
 using System;
 using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
 
 namespace TravelHelper.Core.Domain
 {   
@@ -10,7 +11,8 @@ namespace TravelHelper.Core.Domain
         
         private static readonly Regex NameRegex = new Regex("^(?![_.-])(?!.*[_.-]{2})[a-zA-Z0-9._.-]+(?<![_.-])$");
 
-        public Guid Id;
+        [Key]
+         public Guid Id{ get; private set; }
         public string Email {get;protected set;}
         public string Password {get;protected set;}
         public string Salt {get;protected set;}

@@ -11,6 +11,7 @@ using TravelHelper.Infrastructure.Commands.Users;
 using TravelHelper.Infrastructure.Commands;
 using Microsoft.Extensions.Caching.Memory;
 using TravelHelper.Infrastructure.Extensions;
+using TravelHelper.Infrastructure.Data;
 
 namespace TravelHelper.Api.Controllers
 {
@@ -21,19 +22,22 @@ namespace TravelHelper.Api.Controllers
         private readonly IUserService _userService;
         private readonly IJwtHandler _jwtHandler;
         private readonly IMemoryCache _cache;
+        private readonly DataContext _context;
         public UsersController(IUserService userService, 
-        ICommandDispatcher commandDispatcher,IJwtHandler jwtHandler,IMemoryCache cache) : base(commandDispatcher)
+        ICommandDispatcher commandDispatcher,IJwtHandler jwtHandler,IMemoryCache cache, DataContext context) : base(commandDispatcher)
         {
         _cache =cache;
         _userService = userService;
         _jwtHandler = jwtHandler;  
+        _context= context;
         }
         
         [HttpGet("{email}")]
         public async Task<IActionResult> Get(string email)
         {
-             var user=await _userService.GetAsync(email);
-             if(user==null)
+         //var user=await _userService.GetAsync(email);
+         var user= _context.Users.FirstOrDefault(x => x.Email ==email);
+            if(user==null)
              {
                  return NotFound();
              }

@@ -46,7 +46,7 @@ namespace TravelHelper.Api
             services.AddMemoryCache();
             services.AddControllers();
             services.AddCors();
-            services.AddDbContext<DataContext>(x => x.UseSqlite("Connectionstring"));
+            services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IUserService, UserService>();
         // Build an intermediate service provider
             var sp = services.BuildServiceProvider();
