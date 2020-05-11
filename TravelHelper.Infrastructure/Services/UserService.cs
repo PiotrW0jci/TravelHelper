@@ -12,6 +12,8 @@ namespace TravelHelper.Infrastructure.Services
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IEncrypter _encrypter;
+
+ //public UserService(IUserRepository userRepository,IEncrypter encrypter,IMapper mapper)  _encrypter = encrypter;
         public UserService(IUserRepository userRepository,IEncrypter encrypter,IMapper mapper)
         {
             _userRepository = userRepository;
@@ -45,7 +47,7 @@ namespace TravelHelper.Infrastructure.Services
         public async Task RegisterAsync(string email,string username ,string password)
         {
             var user = await _userRepository.GetAsync(email);
-            if(user==null)
+            if(user!=null)
             {
                 throw new Exception($"User with email: '{email}' already exists.");
             }

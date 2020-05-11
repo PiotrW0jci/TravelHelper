@@ -24,6 +24,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using TravelHelper.Infrastructure.Settings;
 using Microsoft.AspNetCore.Http;
+using TravelHelper.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace TravelHelper.Api
 {
@@ -44,6 +46,7 @@ namespace TravelHelper.Api
             services.AddMemoryCache();
             services.AddControllers();
             services.AddCors();
+            services.AddDbContext<DataContext>(x => x.UseSqlite("Connectionstring"));
             services.AddScoped<IUserService, UserService>();
         // Build an intermediate service provider
             var sp = services.BuildServiceProvider();
