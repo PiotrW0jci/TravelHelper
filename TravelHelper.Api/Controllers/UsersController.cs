@@ -32,17 +32,26 @@ namespace TravelHelper.Api.Controllers
         _context= context;
         }
         
+          
         [HttpGet("{email}")]
         public async Task<IActionResult> Get(string email)
         {
          //var user=await _userService.GetAsync(email);
-         var user= _context.Users.FirstOrDefault(x => x.Email ==email);
+         var user= _context.Users.FirstOrDefault(x => x.Email == email);
             if(user==null)
              {
                  return NotFound();
              }
              return Json(user);
 
+        }
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody]CreateUser command)
+        {
+            await CommandDispatcher.DispatchAsync(command);
+            //var createdUser = _userService.RegisterAsync(command.Email, command.Username,command.Password);
+            
+            return StatusCode(201);
         }
 
         [HttpPost("")]
