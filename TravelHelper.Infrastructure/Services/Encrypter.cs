@@ -11,11 +11,11 @@ namespace TravelHelper.Infrastructure.Services
         private static readonly int DeriveBytesIterationsCount = 10000;
         private static readonly int SaltSize = 40;
 
-        public string GetSalt(string value)
+        public string GetSalt(string password)
         {
-            if (value.Empty())
+            if (password.Empty())
             {
-                throw new ArgumentException("Can not generate salt from an empty value.", nameof(value));
+                throw new ArgumentException("Can not generate salt from an empty value.", nameof(password));
             }
 
             var random = new Random();
