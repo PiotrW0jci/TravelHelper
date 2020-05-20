@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using TravelHelper.Infrastructure.Extensions;
 
 namespace TravelHelper.Infrastructure.Services
@@ -11,11 +12,11 @@ namespace TravelHelper.Infrastructure.Services
         private static readonly int DeriveBytesIterationsCount = 10000;
         private static readonly int SaltSize = 40;
 
-        public string GetSalt(string password)
+        public string GetSalt(string value)
         {
-            if (password.Empty())
+            if (value.Empty())
             {
-                throw new ArgumentException("Can not generate salt from an empty value.", nameof(password));
+                throw new ArgumentException("Can not generate salt from an empty value.", nameof(value));
             }
 
             var random = new Random();
@@ -41,6 +42,22 @@ namespace TravelHelper.Infrastructure.Services
 
             return Convert.ToBase64String(pbkdf2.GetBytes(SaltSize));
         }
+           public string GetActivate(string value)
+        {
+             if (value.Empty())
+            {
+                throw new ArgumentException("Can not generate ActivateLink from an empty value.", nameof(value));
+            }
+
+            var random = new Random();
+            var saltBytes = new byte[SaltSize];
+            var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(saltBytes);
+            
+            String data = Regex.Replace(Convert.ToBase64String(saltBytes), "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled);
+                                           
+            return data;
+    }
 
         private static byte[] GetBytes(string value)
         {
@@ -49,5 +66,8 @@ namespace TravelHelper.Infrastructure.Services
 
             return bytes;
         }
+
+     
+
     }
 }

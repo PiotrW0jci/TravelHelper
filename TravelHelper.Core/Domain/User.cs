@@ -18,6 +18,7 @@ namespace TravelHelper.Core.Domain
         public string Salt {get;protected set;}
         public string Username {get;protected set;}
         public string FullName {get;protected set;}
+        public string HashToActivate {get;protected set;}
        // public string Role { get; protected set; }
         public DateTime CreatedAt {get; protected set;}
         public DateTime UpdatedAt {get; protected set;}
@@ -27,7 +28,7 @@ namespace TravelHelper.Core.Domain
         {
         }
         public User(string email, string username,
-        string password, string salt)
+        string password, string salt,string hashToActivate)
         {
             Id= Guid.NewGuid();
             Username= username;
@@ -36,6 +37,7 @@ namespace TravelHelper.Core.Domain
             Salt=salt;
             CreatedAt= DateTime.UtcNow;
             IsActive = false;
+            HashToActivate = hashToActivate;
         }
 
         public void SetUsername(string username)
@@ -50,6 +52,10 @@ namespace TravelHelper.Core.Domain
             }
             Username=username.ToLowerInvariant();
             UpdatedAt = DateTime.UtcNow;
+        }
+        public void SetIsActive(bool active)
+        {
+            IsActive =active;
         }
         public void SetEmail(string email)
         {

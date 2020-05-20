@@ -1,4 +1,6 @@
 using System;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +17,7 @@ namespace TravelHelper.Infrastructure.Services
         private readonly IMapper _mapper;
         private readonly IEncrypter _encrypter;
         private readonly DataContext _context;
+     
 
         public UserService(IUserRepository userRepository,IEncrypter encrypter,IMapper mapper, DataContext context)
         {
@@ -22,6 +25,7 @@ namespace TravelHelper.Infrastructure.Services
             _encrypter = encrypter;
             _mapper = mapper;
             _context= context;
+        
         }
 
        // public async Task<UserDto> GetAsync(string email)
@@ -40,14 +44,42 @@ namespace TravelHelper.Infrastructure.Services
             }
             
             var hash = _encrypter.GetHash(password,user.Salt);
-            if(user.Password == hash)
+            if(user.Password == hash && user.IsActive)
             {
                 return user;
             }
+            
             throw new Exception("Invalid credentials");
             
         }
+        public async Task<User> ActivateUserAsync(string token)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x=>x.HashToActivate == token);
+            if(user==null)
+            {
+               throw new Exception($"wrong url");
+            }
+            
+            user.SetIsActive(true);
+            await _context.SaveChangesAsync();
 
+            return user;
+        }
+        public async Task <string> SendActivateEmail(string email, string value)
+        {
+            SmtpClient client = new SmtpClient("smtp.poczta.onet.pl",587);
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential("travelhelper@adres.pl", "zaq1@WSX");
+            var message = new MailMessage();
+            message.To.Add(new MailAddress(email));
+            message.From = new MailAddress("Travel Helper <travelhelper@adres.pl>");
+            var link = "https://localhost:5001/users/activate/"+ value ;
+             message.Body = "Click on the link to activate account "+link;
+            message.Subject = "Travel Helper activate account" ;
+            client.Send(message);
+            return("true");
+        }
+    
         public async Task<User> RegisterAsync(string email,string username ,string password)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x=>x.Email == email);
@@ -55,13 +87,16 @@ namespace TravelHelper.Infrastructure.Services
             {
                throw new Exception($"User with email: '{email}' already exists.");
             }
-            var salt=  Guid.NewGuid().ToString("N");//_encrypter.GetSalt(password);
+            var salt=  _encrypter.GetSalt(password);
             var hash = _encrypter.GetHash(password,salt);
-            user = new User(email,username,hash,salt);
+            var hashActivate=  _encrypter.GetActivate(password);
+            user = new User(email,username,hash,salt,hashActivate);
+            await SendActivateEmail(email,hashActivate);
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
 
             return user;
         }
+
     }
 }

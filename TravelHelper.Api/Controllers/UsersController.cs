@@ -1,17 +1,16 @@
-﻿using System.ComponentModel.Design;
+﻿using System.Reflection.Metadata;
+using System.ComponentModel.Design;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using TravelHelper.Infrastructure.DTO;
 using TravelHelper.Infrastructure.Services;
 using TravelHelper.Infrastructure.Commands.Users;
 using TravelHelper.Infrastructure.Commands;
 using Microsoft.Extensions.Caching.Memory;
-using TravelHelper.Infrastructure.Extensions;
 using TravelHelper.Infrastructure.Data;
+
 
 namespace TravelHelper.Api.Controllers
 {
@@ -50,7 +49,14 @@ namespace TravelHelper.Api.Controllers
         {
             await CommandDispatcher.DispatchAsync(command);
             //var createdUser = _userService.RegisterAsync(command.Email, command.Username,command.Password);
-            
+            return StatusCode(201);
+        }
+        
+        [HttpGet("activate/{token}")]
+        public async Task<IActionResult>  Post(ActivateUser command)
+        {
+             await CommandDispatcher.DispatchAsync(command);
+           
             return StatusCode(201);
         }
 
@@ -62,12 +68,14 @@ namespace TravelHelper.Api.Controllers
             }
         
         
-      //  [HttpPost("login")]
-      //  public async Task<IActionResult> Post([FromBody]LoginAsync command)
-      //  {//            await CommandDispatcher.DispatchAsync(command);
-    //        return 
-     //   }
-    //       
+       [HttpPost("login")]
+       public async Task<IActionResult> Post([FromBody]Login command)
+            {         
+                 await CommandDispatcher.DispatchAsync(command);
+                 var user= _context.Users.FirstOrDefault(x => x.Email == command.Email);
+                 return Json(user);
+            }
+          
           
          [HttpGet]
          [Route("token")]

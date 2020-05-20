@@ -9,6 +9,8 @@ namespace TravelHelper.Infrastructure.Services
         //Task <UserDto> GetAsync(string email);
         Task<User> RegisterAsync(string email,string username,string password);
         Task<User> LoginAsync(string email,string password);
+        Task<User> ActivateUserAsync(string token);
+
          
         // Task<User> Login(string username, string password);
          //Task<User> Register(User user, string password);

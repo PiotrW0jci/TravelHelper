@@ -1,0 +1,87 @@
+label {
+  display: inline-block;
+  font-weight: 700;
+  margin-bottom: .5rem;
+}
+
+button {
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 400;
+  padding: 12px 20px;
+  text-align: center;
+  text-transform: uppercase;
+  background: #69c6ba;
+  color: white;
+  width: 100%;
+  border: none;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.tm-container-outer {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.tm-banner-bg {
+  background: url(../../../../assets/img/banner_tmp.jpg) center top no-repeat;
+  min-height: 720px;
+  position: relative;
+}
+
+.tm-banner-overlay {
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  overflow: auto;
+  top: 0px;
+  left: 0px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.login-form {
+  background-color: #f5f6f6;
+  padding: 25px 25px 15px;
+  width: 40%;
+  max-width: 830px;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 80px;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  padding: 0 8px;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: .75rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-image: none;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  border-radius: 0;
+}
+
+.form-control::placeholder {
+  color: #868e96;
+  opacity: 1
+}
+
+.tm-banner-row {
+  display: flex;
+  position: relative;
+  z-index: 100;
+  justify-content: center;
+  padding-top: 100px;
+}
