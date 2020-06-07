@@ -29,4 +29,7 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
+TravelHelper.db
+TravelHelper.db-shm
+TravelHelper.db-wal
 /TravelHelper.Frontend/travel-helper/node_modules

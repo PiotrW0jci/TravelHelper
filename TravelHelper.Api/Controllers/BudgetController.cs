@@ -9,6 +9,7 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TravelHelper.Api.Controllers
 {
@@ -22,7 +23,7 @@ namespace TravelHelper.Api.Controllers
             _budget=budget;  
             _context= context;
         }
-
+       [Authorize]
        [HttpPost("add")]
        public async Task<IActionResult> Post([FromBody]AddNewBudgetPlan command)
             {         
@@ -31,7 +32,7 @@ namespace TravelHelper.Api.Controllers
                 return StatusCode(201);
             
     }
-
+     [Authorize]
      [HttpPost("addItem")]
        public async Task<IActionResult> AddElement([FromBody]AddNewBudgetPlanItem command)
             {         
@@ -40,9 +41,11 @@ namespace TravelHelper.Api.Controllers
                 return StatusCode(201);
             
     }
-      [HttpGet("")]
-       public async Task<IActionResult> GetBudgets([FromBody]GetBudgetPlanList command)
-            {         
+      [Authorize]
+      [HttpGet("{UserId}")]
+       public async Task<IActionResult> GetBudgets(GetBudgetPlanList command)
+            {   
+                //await CommandDispatcher.DispatchAsync(command);      
                 var userid = Guid.Parse(command.UserId);
                 var budget = await _context.Budgets.FirstOrDefaultAsync(x=>x.UserId == userid);
                 var name = budget.Name;

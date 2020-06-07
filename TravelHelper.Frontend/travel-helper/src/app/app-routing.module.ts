@@ -5,6 +5,7 @@ import { TopDestinationsComponent } from './shared/components/top-destinations/t
 import { RegistrationComponent } from './shared/components/registration/registration.component';
 import { LoginComponent } from './shared/components/login/login.component';
 import { FindLocationComponent } from './shared/components/find-location/find-location.component';
+import { BudgetPlannerComponent } from './shared/components/budget-planner/budget-planner.component';
 
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationComponent},
   { path: 'login', component: LoginComponent},
   { path: 'locations', component: FindLocationComponent},
+  { path: 'budget', component: BudgetPlannerComponent},
 ];
 
 @NgModule({

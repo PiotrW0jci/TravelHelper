@@ -49,12 +49,22 @@ namespace TravelHelper.Api
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IBudgetService, BudgetService>();
-            
+            services.AddScoped<IEmailSender,EmailSender>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                        .AddJwtBearer(options =>{
+                            options.TokenValidationParameters = new TokenValidationParameters
+                            {
+                                ValidateIssuerSigningKey= true,
+                                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                                ValidateIssuer= false,
+                                ValidateAudience= false
+                            };
+                        });
         // Build an intermediate service provider
-            var sp = services.BuildServiceProvider();
+         //   var sp = services.BuildServiceProvider();
 
         // Resolve the services from the service provider
-            var jwtSettings = sp.GetService<JwtSettings>();
+           /* var jwtSettings = sp.GetService<JwtSettings>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(cfg => {
                         cfg.TokenValidationParameters = new TokenValidationParameters()
@@ -62,8 +72,8 @@ namespace TravelHelper.Api
                             ValidIssuer = "http://localhost:5001",
                             ValidateAudience = false,
                            // ValidateLifetime = true,
-                           //todo move and change the secret key
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("xecretKeywqejane"))
+                           
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(""))
 
                     };
 
@@ -71,7 +81,7 @@ namespace TravelHelper.Api
                 }
  
                 
-                );
+                );*/
                 // configure DI for application services
            
         }

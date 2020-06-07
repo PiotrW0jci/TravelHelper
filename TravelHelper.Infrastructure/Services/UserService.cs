@@ -15,15 +15,17 @@ namespace TravelHelper.Infrastructure.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly IEmailSender _emailSender;
         private readonly IEncrypter _encrypter;
         private readonly DataContext _context;
      
 
-        public UserService(IUserRepository userRepository,IEncrypter encrypter,IMapper mapper, DataContext context)
+        public UserService(IUserRepository userRepository,IEmailSender emailSender,IEncrypter encrypter,IMapper mapper, DataContext context)
         {
             _userRepository = userRepository;
             _encrypter = encrypter;
             _mapper = mapper;
+            _emailSender = emailSender;
             _context= context;
         
         }
@@ -65,20 +67,6 @@ namespace TravelHelper.Infrastructure.Services
 
             return user;
         }
-        public async Task <string> SendActivateEmail(string email, string value)
-        {
-            SmtpClient client = new SmtpClient("smtp.poczta.onet.pl",587);
-            client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential("travelhelper@adres.pl", "zaq1@WSX");
-            var message = new MailMessage();
-            message.To.Add(new MailAddress(email));
-            message.From = new MailAddress("Travel Helper <travelhelper@adres.pl>");
-            var link = "https://localhost:5001/users/activate/"+ value ;
-             message.Body = "Click on the link to activate account "+link;
-            message.Subject = "Travel Helper activate account" ;
-            client.Send(message);
-            return("true");
-        }
     
         public async Task<User> RegisterAsync(string email,string username ,string password)
         {
@@ -91,7 +79,7 @@ namespace TravelHelper.Infrastructure.Services
             var hash = _encrypter.GetHash(password,salt);
             var hashActivate=  _encrypter.GetActivate(password);
             user = new User(email,username,hash,salt,hashActivate);
-            await SendActivateEmail(email,hashActivate);
+            await  _emailSender.SendActivateEmail(email,hashActivate);
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
 
