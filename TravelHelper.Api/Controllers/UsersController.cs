@@ -35,7 +35,6 @@ namespace TravelHelper.Api.Controllers
         [HttpGet("{email}")]
         public async Task<IActionResult> Get(string email)
         {
-         //var user=await _userService.GetAsync(email);
          var user= _context.Users.FirstOrDefault(x => x.Email == email);
             if(user==null)
              {
@@ -48,7 +47,6 @@ namespace TravelHelper.Api.Controllers
         public async Task<IActionResult> Register([FromBody]CreateUser command)
         {
             await CommandDispatcher.DispatchAsync(command);
-            //var createdUser = _userService.RegisterAsync(command.Email, command.Username,command.Password);
             return StatusCode(201);
         }
         
@@ -77,19 +75,7 @@ namespace TravelHelper.Api.Controllers
             }
           
           
-         [HttpGet]
-         [Route("token")]
-         public async Task<IActionResult> GetToken()
-            {
-                var token = _jwtHandler.CreateToken("user1@email.com");
-                return Json(token);
-            }
-         [HttpGet]
-         [Route("auth")]
-         public async Task<IActionResult> GetAuth()
-            {
-                return Json("Auth");
-            }
+       
         
         
     }
