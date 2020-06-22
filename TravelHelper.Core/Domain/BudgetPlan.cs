@@ -7,17 +7,16 @@ namespace TravelHelper.Core.Domain
     {
         [Key]
         public Guid Id {get; protected set;}
-        public Guid UserId {get; protected set;}
-        public string Name{get; protected set;}
+        public Guid TripId {get; protected set;}
+
         public DateTime  CreatedAt{get; protected set;}
           protected BudgetPlan()
         {
         }
-         public BudgetPlan (string userid,string budgetname)
+         public BudgetPlan (Guid tripid)
         {
             Id=Guid.NewGuid();
-            UserId= Guid.Parse(userid);
-            Name=budgetname;
+            TripId= tripid;
             CreatedAt = DateTime.UtcNow;
         }
 
