@@ -15,4 +15,16 @@ export class UserService {
     register(user: User) {
         return this.http.post(`${this.constants.API_ENDPOINT}users/register`, user);
     }
+
+    addTrip(tripName: object) {
+      return this.http.post(`${this.constants.API_ENDPOINT}trip/add`, tripName)
+    }
+
+    getUserTrips() {
+      return this.http.get(`${this.constants.API_ENDPOINT}trip`)
+    }
+
+    removeTrip(id) {
+      return this.http.post(`${this.constants.API_ENDPOINT}trip/delete`, id)
+    }
 }

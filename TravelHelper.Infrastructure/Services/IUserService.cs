@@ -6,14 +6,11 @@ namespace TravelHelper.Infrastructure.Services
 {
     public interface IUserService : IService
     {
-        //Task <UserDto> GetAsync(string email);
+    
         Task<User> RegisterAsync(string email,string username,string password);
         Task<User> LoginAsync(string email,string password);
         Task<User> ActivateUserAsync(string token);
+        Task<User> ChangeUserPasswordAsync(string id, string password,string newPassword);
 
-         
-        // Task<User> Login(string username, string password);
-         //Task<User> Register(User user, string password);
-        
     }
 }

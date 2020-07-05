@@ -73,6 +73,15 @@ namespace TravelHelper.Api.Controllers
                  var user= _context.Users.FirstOrDefault(x => x.Email == command.Email);
                  return Json(user);
             }
+
+         [HttpPost("changePassword")]
+       public async Task<IActionResult> Change([FromBody]ChangeUserPassword command)
+            {         
+                 await CommandDispatcher.DispatchAsync(command);
+                
+                 return StatusCode(201);
+            }
+    
           
           
        

@@ -23,7 +23,7 @@ namespace TravelHelper.Api.Controllers
             _budget=budget;  
             _context= context;
         }
-       [Authorize]
+    
        [HttpPost("add")]
        public async Task<IActionResult> Post([FromBody]AddNewBudgetPlan command)
             {         
@@ -32,7 +32,7 @@ namespace TravelHelper.Api.Controllers
                 return StatusCode(201);
             
     }
-     [Authorize]
+  
      [HttpPost("addItem")]
        public async Task<IActionResult> AddElement([FromBody]AddNewBudgetPlanItem command)
             {         
@@ -41,20 +41,35 @@ namespace TravelHelper.Api.Controllers
                 return StatusCode(201);
             
     }
-      [Authorize]
-      [HttpGet("{UserId}")]
-       public async Task<IActionResult> GetBudgets(GetBudgetPlanList command)
+     
+      [HttpGet("{tripId}")]
+       public async Task<IActionResult> GetBudget(string tripId)
             {   
                 //await CommandDispatcher.DispatchAsync(command);      
-                var userid = Guid.Parse(command.UserId);
-                var budget = await _context.Budgets.FirstOrDefaultAsync(x=>x.UserId == userid);
-                var name = budget.Name;
+                var tripid = Guid.Parse(tripId);
+                var budget = await _context.Budgets.FirstOrDefaultAsync(x=>x.TripId == tripid);
                 var Id =budget.Id;
                 var items = _context.BudgetItems.Where(x=>x.BudgetPlanId==Id).ToListAsync();
       
                 return Json(new
-                {
-                    Name =name,
+                {budget.Total,budget.Id,
+                    ItemList = items});
+            
+    }
+     [HttpPost("amount")]
+       public async Task<IActionResult> SetAmoubnt(string tripId)
+            {   
+                //await CommandDispatcher.DispatchAsync(command);      
+                var tripid = Guid.Parse(tripId);
+                var budget = await _context.Budgets.FirstOrDefaultAsync(x=>x.TripId == tripid);
+                
+                var Id =budget.Id;
+                await _context.SaveChangesAsync();
+
+                var items = _context.BudgetItems.Where(x=>x.BudgetPlanId==Id).ToListAsync();
+      
+                return Json(new
+                {budget.Id,
                     ItemList = items});
             
     }

@@ -13,7 +13,7 @@ namespace TravelHelper.Infrastructure.Handlers.Budget
         }
         public async Task HandleAsync(GetBudgetPlanList command)
         {
-            await _budget.GetUserBudgetPlanAsync(command.UserId);
+            await _budget.GetUserBudgetPlanAsync(command.TripId);
         }
     }
 }

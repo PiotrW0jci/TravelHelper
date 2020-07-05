@@ -6,28 +6,23 @@
           <h1 class="text-uppercase tm-banner-title">Let's begin</h1>
           <img src="assets/img/dots-3.png" alt="Dots">
           <p class="tm-banner-subtitle">We assist you to choose the best.</p>
-          <a href="javascript:void(0)" class="tm-down-arrow-link"><i class="fa fa-2x fa-angle-down tm-down-arrow"></i></a>               </div>
+          <a href="javascript:void(0)" class="tm-down-arrow-link"><i
+              class="fa fa-2x fa-angle-down tm-down-arrow"></i></a>
+        </div>
       </div> <!-- col-xs-12 -->
     </div> <!-- row -->
     <div class="row tm-banner-row" id="tm-section-search">
       <div>
         <div class="search-box">
-            <i class="fa fa-search"></i>
-            <input type="search" class="tbox" placeholder="Type location ...">
-            <button class="btn btn-primary tm-btn">Search</button>
+          <i class="fa fa-search"></i>
+          <input type="search" class="tbox" placeholder="Type location ..." [(ngModel)]="autocompleteInput"
+            #addresstext>
+          <button class="btn btn-primary tm-btn">Search</button>
 
         </div>
       </div>
 
-      <div class="form-row tm-search-form-row">
-        <div class="form-group tm-form-group tm-form-group-pad tm-form-group-3">
-          <input name="check-in" hidden="true" type="text" class="form-control" id="inputCheckIn"
-            placeholder="Check In">
-        </div>
-        <div class="form-group tm-form-group tm-form-group-pad tm-form-group-3">
-          <input name="check-out" hidden="true" type="text" id="inputCheckOut" placeholder="Check Out">
-        </div>
-      </div>
+
     </div> <!-- row -->
     <div class="tm-banner-overlay"></div>
   </div> <!-- .container -->
@@ -39,12 +34,11 @@
         <img src="assets/img/tm-img-03.jpg" alt="Image">
       </div>
       <div class="tm-slideshow-description">
-        <h2>Europe's most visited places</h2>
-        <p>Aenean in lacus nec dolor fermentum congue. Maecenas ut velit pharetra, pharetra tortor sit amet, vulputate
-          sem. Vestibulum mi nibh, faucibus ac eros id, sagittis tincidunt velit. Proin interdum ullamcorper faucibus.
-          Ut
-          mi nunc, sollicitudin non pulvinar id, sagittis eget diam.</p>
-        <a href="#" class="btn-grn">See more</a>
+        <h2>Europe's most visited place</h2><br>
+        <h4>Barcelona</h4>
+        <p>Barcelona's diverse architecture sets the city apart from other European destinations. Gaudí's Park Güell and La Sagrada Família are beyond impressive, as are Catedral de Barcelona , Montjuïc Castle and the many medieval buildings in the Gothic Quarter. When you tire of taking in the city's stunning architecture, relax on La Barceloneta beach, sample a smattering of tasty local tapas or sip sangria along Las Ramblas.
+        </p>
+        <a href="http://localhost:4200/locations/Barcelona" class="btn-grn" (click)="handleBarcelona()">See more</a>
       </div>
     </section>
     <section class="clearfix tm-slideshow-section tm-slideshow-section-reverse">
@@ -54,25 +48,22 @@
       </div>
 
       <div class="tm-slideshow-description tm-slideshow-description-left">
-        <h2 class="">Asia's most popular places</h2>
-        <p>Vivamus in massa ullamcorper nunc auctor accumsan ac at arcu. Donec sagittis mattis pharetra. Proin commodo,
-          ante et volutpat pulvinar, arcu arcu ullamcorper diam, id maximus sem tellus id sem. Suspendisse eget rhoncus
-          diam. Fusce urna elit, porta nec ullamcorper id.</p>
-        <a href="#" class="btn-pnk">See more</a>
+        <h2 class="">Asia's most popular places</h2><br>
+        <h4>Maldives</h4>
+        <p>This far-flung destination, located miles from civilization in the Indian Ocean, is made up of nearly 1,200 islands that provide an atmosphere that's pretty much paradise. The islands of the Maldives feature lush tropical landscapes, unparalleled white sand beaches, crystal-clear ocean waters and coral reefs that prompt extensive exploration. The best way to experience this slice of paradise?</p>
+        <a href="http://localhost:4200/locations/Maldives" class="btn-pnk" (click)="handleMaledives()">See more</a>
       </div>
 
     </section>
     <section class="tm-slideshow-section">
       <div class="tm-slideshow">
-        <img src="assets/img/tm-img-01.jpg" alt="Image">
+        <img src="assets/img/grand-canyon.jpg" alt="Image" style="width:700px; height:500px; filter:contrast(70%)">
       </div>
       <div class="tm-slideshow-description tm-bg-primary">
         <h2 class="">America's most famous places</h2>
-        <p>Donec nec laoreet diam, at vehicula ante. Orci varius natoque penatibus et magnis dis parturient montes,
-          nascetur ridiculus mus. Suspendisse nec dapibus nunc, quis viverra metus. Morbi eget diam gravida, euismod
-          magna
-          vel, tempor urna.</p>
-        <a href="#" class="btn-grn">See more</a>
+        <h4>Grand Canyon</h4><br>
+        <p>To experience some of the most inspiring views America has to offer, plan a trip to Grand Canyon National Park. The Colorado River weaves its way through the 277-mile-long canyon, making it a top destination for whitewater rafting. Regardless of how you choose to spend your time in the Grand Canyon, you're sure to feel small against its towering rock formations and expansive vistas</p>
+        <a href="http://localhost:4200/locations/Grand Canyon" class="btn-grn" (click)="handleGrand()">See more</a>
       </div>
     </section>
   </div>

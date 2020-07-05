@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+    <div *ngFor="let trip of trips" class="col-md-4 card-container">
+      <div class="card-flip">
+        <!-- Card 2 Front -->
+        <div class="card front">
+          <img [src]="trip.image_url" class="card-img-top img-fluid">
+          <div class="card-body">
+            <h4 class="card-title">{{ trip.name }}</h4>
+            <p class="card-text">{{ trip.locations.join(' ')}}</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          </div>
+        </div>
+        <!-- End Card 2 Front -->
+
+        <!-- Card 2 Back -->
+        <div class="card back">
+          <div class="card-header">
+            Featured
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Special title treatment</h4>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <div>
+              <a href="{{ 'http://localhost:4200/trip/' + trip.id + '/budget'}}" class="btn btn-outline-primary grn">Plan budget</a>
+            </div>
+            <br>
+            <div>
+              <a href="http://localhost:4200/" class="btn btn-outline-primary grn">Add location</a>
+            </div>
+            <br>
+            <div>
+              <a class="btn btn-outline-danger pnk" (click)="removeTrip(trip.id)">Remove trip</a>
+            </div>
+          </div>
+        </div>
+        <!-- End Card 2 Back -->
+      </div>
+    </div>
+    <!-- End Card 2 -->
+  </div>
+</div>

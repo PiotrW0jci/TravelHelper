@@ -1,0 +1,13 @@
+<div class="weather-panel">
+  <div class="card" [style.background-image]="'url(http://openweathermap.org/img/wn/' + icon + '@2x.png)'">
+  </div>
+  <div class="main-weather">
+    {{ mainWeather }}
+  </div>
+  <div class="temp">
+    {{ temp + '°C' }}
+  </div>
+  <div class="feels-like">
+    {{ 'Feels like: ' + feelsLike + '°C'}}
+  </div>
+</div>

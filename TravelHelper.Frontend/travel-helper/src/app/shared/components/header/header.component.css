@@ -1,17 +1,15 @@
 * {
-  height: 120px;
   box-sizing: border-box;
   font-size: 13px;
 }
 
 a {
   color: black;
-  height: 20px;
 }
 
 a:hover {
   transform: scale(1.5);
-  color: #69c6ba;
+  color: #69c6ba !important;
 }
 
 .top-bar {
@@ -41,7 +39,6 @@ a:hover {
 
 .top-bar.sticky {
   height: 60px;
-  color: white;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
 }
 
@@ -60,4 +57,44 @@ a:hover {
   font-weight: 700;
   display: block;
   transition: all 0.3s ease;
+}
+
+.dropdown:hover {
+  color: #69c6ba;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.sticky .logo .dropdown-content a {
+  padding: 12px 16px;
+}
+
+.dropdown-content a:hover {background-color:white}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a:hover {
+  color: #69c6ba;
+  transform: none;
+}
+
+.fas {
+  position: relative;
+  top: 3px;
 }

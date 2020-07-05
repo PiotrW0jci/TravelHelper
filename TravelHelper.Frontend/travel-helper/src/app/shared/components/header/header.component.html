@@ -5,9 +5,15 @@
         <li><a href="">Home</a></li>
         <li><a href="#tm-section-2">Top destinations</a></li>
         <li><a href="">Recommended Places</a></li>
-        <li><a href="">Contact Us</a></li>
         <li *ngIf="!this.authenticationService.currentUserValue"><a href="http://localhost:4200/login">Log in</a></li>
-        <li *ngIf="this.authenticationService.currentUserValue"><a href="http://localhost:4200/">My Trips</a></li>
+        <li *ngIf="this.authenticationService.currentUserValue"><a href="http://localhost:4200/trips">My Trips</a></li>
+        <li *ngIf="this.authenticationService.currentUserValue" class="dropdown">
+          <a class="fas fa-user"></a>
+          <div class="dropdown-content">
+            <a href="http://localhost:4200/change_password" class="dropdown">Change password</a>
+            <a href="http://localhost:4200/remove_account" class="dropdown">Remove account</a>
+          </div>
+        </li>
         <li *ngIf="this.authenticationService.currentUserValue"><a (click)="logout()">Log Out</a></li>
       </ul>
     </div>

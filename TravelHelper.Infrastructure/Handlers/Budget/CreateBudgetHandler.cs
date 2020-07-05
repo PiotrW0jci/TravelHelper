@@ -14,7 +14,7 @@ namespace TravelHelper.Infrastructure.Handlers.Budget
         }
         public async  Task HandleAsync(AddNewBudgetPlan command)
         {
-            await _budget.AddNewBudgetPlanAsync(command.UserID,command.Name);
+            await _budget.AddNewBudgetPlanAsync(command.TripID);
         }
     }
 }

@@ -11,19 +11,22 @@ namespace TravelHelper.Core.Domain
         public Guid BudgetId {get;  set;}
         public DateTime  CreatedAt{get; protected set;}
         public string TripName{get;protected set;}
+
+        public string PhotoUrl{get;protected set;}
         
-        public string Destination{get;protected set;}
+        public Guid DestinationId{get;protected set;}
 
 
         protected Trip()
         {
         }
-        public Trip (Guid userid,string tripname)
+        public Trip (Guid userid,string tripname, string photoUrl)
         {
             Id= Guid.NewGuid();
             UserId= userid;
             TripName=tripname;
             CreatedAt = DateTime.UtcNow;
+            PhotoUrl=photoUrl;
         }
     }
 

@@ -1,0 +1,16 @@
+<div class="outer-card">
+  <div class="top-panel">
+    <button class="btn-prev-year">
+      <i class="arrow arrow-left"></i>
+    </button>
+    <span class="year-lable">{{ years[0] }}</span>
+    <button class="btn-next-year">
+      <i class="arrow arrow-right"></i>
+    </button>
+  </div>
+  <div class="content-panel">
+    <div class="month-item" *ngFor="let month of months">
+      <div class="month-item-hightlight">{{ month }}</div>
+    </div>
+  </div>
+</div>

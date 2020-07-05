@@ -8,6 +8,7 @@ namespace TravelHelper.Core.Domain
         [Key]
         public Guid Id {get; protected set;}
         public Guid TripId {get; protected set;}
+        public int Total {get;set;}
 
         public DateTime  CreatedAt{get; protected set;}
           protected BudgetPlan()

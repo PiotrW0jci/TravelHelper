@@ -1,0 +1,79 @@
+.outer-card {
+  touch-action: none;
+  overflow: hidden;
+  width: 400px;
+  height: 400px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.top-panel {
+  width: 400px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+}
+
+.top-panel.year-lable {
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.content-panel {
+  padding: 24px 8px;
+}
+
+button {
+  width: 50px;
+  height: 50px;
+  background:none;
+  border:none;
+  margin:0;
+  padding:0;
+  cursor: pointer;
+}
+
+button:focus {outline:0;}
+
+.btn-prev-year {
+  float: left;
+}
+
+.btn-next-year {
+  float: right;
+}
+
+i {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 6px;
+}
+
+.arrow-right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.arrow-left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg)
+}
+
+.year-lable {
+
+}
+
+.month-item {
+
+}
+
+.month-item-hightligth {
+  display: inline-block;
+  height: 64px;
+  width: 64px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 64px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+}

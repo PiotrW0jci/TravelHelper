@@ -11,7 +11,7 @@ namespace TravelHelper.Infrastructure.Services
         {
             SmtpClient client = new SmtpClient("poczta.int.pl",587);
             client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential("noreplay@travelhelper.int.pl", "");
+            client.Credentials = new NetworkCredential("noreplay@travelhelper.int.pl", "zaq1@WSX");
             var message = new MailMessage();
             message.From = new MailAddress("Travel Helper <noreplay@travelhelper.int.pl>");
             message.To.Add(new MailAddress(email));

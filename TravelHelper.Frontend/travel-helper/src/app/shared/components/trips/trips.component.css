@@ -1,0 +1,63 @@
+.tm-container-outer {
+  max-width: 1400px;
+  margin: 0 auto;
+  background-color: white;
+  color: gray;
+  font-size: 17px;
+}
+
+.card {
+  margin: 10px 10px;
+}
+
+/* Flip Cards CSS */
+.card-container {
+  display: grid;
+  perspective: 700px;
+}
+
+.card-flip {
+  display: grid;
+  grid-template: 1fr / 1fr;
+  grid-template-areas: "frontAndBack";
+  transform-style: preserve-3d;
+  transition: all 0.7s ease;
+}
+
+.card-flip div {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.front {
+  grid-area: frontAndBack;
+}
+
+.back {
+  grid-area: frontAndBack;
+  transform: rotateY(-180deg);
+}
+
+.card-container:hover .card-flip {
+  transform: rotateY(180deg);
+}
+
+.grn {
+  color: #69c6ba;
+  border-color: #69c6ba;
+}
+
+.grn:hover {
+  color: white;
+  background-color: #69c6ba;
+}
+
+.pnk {
+  color: #c66995;
+  border-color: #c66995;
+}
+
+.pnk:hover {
+  color: white;
+  background-color: #c66995;
+}

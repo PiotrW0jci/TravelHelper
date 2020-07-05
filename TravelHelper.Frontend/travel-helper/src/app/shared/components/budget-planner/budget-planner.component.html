@@ -6,10 +6,9 @@
 
 
     <div class="budget__income clearfix">
-      <div class="budget__income--text">Total amount</div>
+      <div class="budget__income--text">Total amount     <input type="number" [(ngModel)]="total_budget"> <button class="add__btn white" (click)="setTotalAmount()"><i
+        class="ion-ios-checkmark-outline"></i></button></div>
       <div class="right">
-        <div class="budget__income--value">{{ total_budget }}</div>
-        <div class="budget__income--percentage">&nbsp;</div>
       </div>
     </div>
 
@@ -17,7 +16,6 @@
       <div class="budget__expenses--text">Expenses</div>
       <div class="right clearfix">
         <div class="budget__expenses--value">- {{ loading ? 0 : totalExpenses() }}</div>
-        <div class="budget__expenses--percentage">{{ (totalExpenses() * 100 / total_budget).toFixed(2) }}%</div>
       </div>
     </div>
   </div>
@@ -45,7 +43,6 @@
         <div class="item__description">{{ item.name }}</div>
         <div class="right clearfix">
             <div class="item__value">- {{ item.value }}</div>
-            <div class="item__percentage">{{ (item.value * 100 / total_budget).toFixed(2)}}%</div>
             <div class="item__delete">
                 <button class="item__delete--btn" (click)="remove(item)"><i class="ion-ios-close-outline"></i></button>
             </div>

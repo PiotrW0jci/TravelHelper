@@ -30,16 +30,10 @@ namespace TravelHelper.Infrastructure.Services
         
         }
 
-       // public async Task<UserDto> GetAsync(string email)
-       // {
-         //   var user =  await _userRepository.GetAsync(email);
-          //  return _mapper.Map<User,UserDto>(user);
-     //   }
-
         public async Task<User> LoginAsync(string email, string password)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x=>x.Email == email);
-            //var user = await _userRepository.GetAsync(email);
+            
             if(user==null)
             {
                 throw new Exception($"User with email: '{email}' does not exists.");
@@ -86,5 +80,15 @@ namespace TravelHelper.Infrastructure.Services
             return user;
         }
 
+        public async Task<User> ChangeUserPasswordAsync(string id, string password, string newPassword)
+        {
+            var user =  await _context.Users.FirstOrDefaultAsync(x=>x.Id == Guid.Parse(id));
+            var salt=  _encrypter.GetSalt(newPassword);
+            var hash = _encrypter.GetHash(newPassword,salt);
+            user.Password=hash;
+            _context.SaveChangesAsync();
+            return user;
+
+        }
     }
 }

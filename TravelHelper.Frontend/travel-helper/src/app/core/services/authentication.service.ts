@@ -24,8 +24,11 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
+    public get isLoggedIn() {
+      return this.currentUserValue && this.currentUserValue.token
+    }
     login(email, password) {
-        return this.http.post<any>(`${this.constants.API_ENDPOINT}users/login`, { email, password })
+        return this.http.post<any>(`${this.constants.API_ENDPOINT}login/login`, { email, password })
             .pipe(map(user => {
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);

@@ -12,5 +12,7 @@ namespace TravelHelper.Infrastructure.Data
         public DbSet<User> Users {get;set;}
         public DbSet<BudgetPlan> Budgets {get;set;}
         public DbSet<BudgetPlanItem> BudgetItems {get;set;}
+        public DbSet<Trip> Trips {get;set;}
+        public DbSet<Destination> Destinations {get;set;}
     }
 }
